@@ -1,5 +1,5 @@
 ﻿Public Class Canvas
-
+    'Class wide variables allow access from class methods.
     Dim x1 As Integer = 0
     Dim y1 As Integer = 0
     Dim x2 As Integer = 0
@@ -35,13 +35,29 @@
 
     Private Sub picDrawing_Click(sender As Object, e As EventArgs) Handles picDrawing.Click
 
+        Dim canvasTop As Integer = Me.Top + picDrawing.Top
+        Dim canvasLeft As Integer = Me.Left + picDrawing.Left
+        Dim xCoOrd As Integer = MousePosition.X
+        Dim yCoOrd As Integer = MousePosition.Y
+
+        If (canvasTop < xCoOrd) Then
+            xCoOrd = xCoOrd - canvasTop
+        Else
+            xCoOrd = canvasTop
+        End If
+        If (canvasLeft < yCoOrd) Then
+            yCoOrd = yCoOrd - canvasLeft
+        Else
+            yCoOrd = canvasLeft
+        End If
+
         If (True = lineStart) Then
-            x1 = MousePosition.X
-            y1 = MousePosition.Y
+            x1 = xCoOrd
+            y1 = yCoOrd
             lineStart = False
         Else
-            x2 = MousePosition.X
-            y2 = MousePosition.Y
+            x2 = xCoOrd
+            y2 = yCoOrd
             drawLine()
             picDrawing.Refresh()
             lineStart = True
